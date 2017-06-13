@@ -5,6 +5,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { Observable } from "rxjs/Observable";
 import { Router } from "@angular/router";
+import { AuthService } from "app/shared/services/auth.service";
 
 @Component({
   selector: 'home',
@@ -19,7 +20,8 @@ export class HomeComponent implements OnInit {
   constructor(
     private _fb: FormBuilder,
     public afAuth: AngularFireAuth,
-    private _router: Router
+    private _router: Router,
+    private _authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -31,7 +33,11 @@ export class HomeComponent implements OnInit {
   }
 
   onloginClick() {
-    this._router.navigate(["/faculty/home"]);
+    var email = this.form.get('email').value;
+    var password = this.form.get('password').value;
+
+    this._authService.login(email, password);
+      
   }
 
 

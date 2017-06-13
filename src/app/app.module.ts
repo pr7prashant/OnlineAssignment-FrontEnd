@@ -14,6 +14,7 @@ import { AppRoutingModule, routingComponents } from "app/app-routing.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { FacultyModule } from "app/faculty/faculty.module";
 import { facultyRoutingComponents } from "app/faculty/faculty-routing.module";
+import { AuthGuard } from "app/shared/guards/auth-guard.service";
 
 @NgModule({
   declarations: [

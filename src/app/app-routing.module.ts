@@ -6,7 +6,7 @@ import { FacultyHomeComponent } from "app/faculty/faculty-home/faculty-home.comp
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
-    //{ path: '**', component: NotFoundComponent }
+    { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({
