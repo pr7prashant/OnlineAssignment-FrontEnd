@@ -14,6 +14,9 @@
   <div class="alert alert-danger" *ngIf="_authService.loginError == 'auth/user-disabled'">
     This user is blocked. Contact Admin.
   </div>
+  <div class="alert alert-danger" *ngIf="_authService.loginError == 'auth/wrong-password'">
+    Invalid email or password.
+  </div>
   <form [formGroup]="form">
     <legend>Login</legend>
     <div class="form-group">

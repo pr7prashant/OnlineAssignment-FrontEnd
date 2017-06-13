@@ -12,8 +12,10 @@ export class AuthGuard implements CanActivate {
 
     canActivate() {
         console.log("in auth-guard service");
-        if(this._authServie.isLoggedIn)
+        if(this._authServie.isLoggedIn) {
+            console.log("logged in");
             return true;
+        }
 
         this._router.navigate(['']);
 

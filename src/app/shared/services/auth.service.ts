@@ -27,7 +27,7 @@ export class AuthService {
         var subscription = Observable.fromPromise(this.afAuth.auth.signInWithEmailAndPassword(email, password));
         subscription.subscribe(
             res => {
-                console.log("logged in");
+                console.log("logging in...");
                 this.isLoggedIn = true;
                 this._router.navigate(["/faculty/home"]);
             },
