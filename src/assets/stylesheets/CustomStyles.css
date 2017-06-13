@@ -18,17 +18,17 @@
 }
 
 .site-footer {
-	background-color: #222;
+	background-color: #263238;
 	color: #fff;
 	margin-top: 30px;
 	padding-top: 30px;
 }
 
 .bottom-footer {
-	border-top: 1px solid #b2b2b2;
+	border-top: 1px solid #fff;
 	margin-top: 10px;
 	padding-top: 10px;
-	color: #b2b2b2;
+	color: #fff;
 }
 
 .footer-nav {
@@ -46,10 +46,14 @@
 }
 
 .footer-nav a {
-	color: #b2b2b2;
+	color: #fff;
 }
 
 .footer-nav a:HOVER {
 	color: #fff;
 	text-decoration: none;
+}
+
+body {
+	padding-bottom: 250px;
 }

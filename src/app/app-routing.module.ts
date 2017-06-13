@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from "app/shared/components/home/home.component";
+import { NotFoundComponent } from "app/shared/components/not-found/not-found.component";
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
-    { path: '**', component: HomeComponent }
+    { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({
@@ -17,4 +18,4 @@ export const routes: Routes = [
 })
 
 export class AppRoutingModule { }
-export const routingComponents = [HomeComponent]
+export const routingComponents = [HomeComponent, NotFoundComponent]

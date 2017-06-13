@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UsernameValidators } from "app/shared/validators/usernameValidators";
+import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase/app';
+import { Observable } from "rxjs/Observable";
 
 @Component({
   selector: 'home',
@@ -10,9 +13,11 @@ import { UsernameValidators } from "app/shared/validators/usernameValidators";
 export class HomeComponent implements OnInit {
 
   form: FormGroup;
+  user: Observable<firebase.User>;
 
   constructor(
-    private _fb: FormBuilder
+    private _fb: FormBuilder,
+    public afAuth: AngularFireAuth
   ) { }
 
   ngOnInit() {
@@ -22,5 +27,6 @@ export class HomeComponent implements OnInit {
       password: ['', Validators.compose([ Validators.required ])]
     })
   }
+
 
 }
