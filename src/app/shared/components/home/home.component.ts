@@ -4,6 +4,7 @@ import { UsernameValidators } from "app/shared/validators/usernameValidators";
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { Observable } from "rxjs/Observable";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'home',
@@ -17,7 +18,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private _fb: FormBuilder,
-    public afAuth: AngularFireAuth
+    public afAuth: AngularFireAuth,
+    private _router: Router
   ) { }
 
   ngOnInit() {
@@ -26,6 +28,10 @@ export class HomeComponent implements OnInit {
       email: ['', Validators.compose([ Validators.required, Validators.email ])],
       password: ['', Validators.compose([ Validators.required ])]
     })
+  }
+
+  onloginClick() {
+    this._router.navigate(["/faculty/home"]);
   }
 
 

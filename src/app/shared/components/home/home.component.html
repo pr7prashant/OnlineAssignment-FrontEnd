@@ -1,10 +1,10 @@
-<div class="jumbotron text-center">
+<!--<div class="jumbotron text-center">
   <div class="container">
     <h1>Online Assignments</h1>
     <p>Now submit your assignments on the go</p>
     <a href=""><img src="assets/images/google.png"></a>
   </div>
-</div>
+</div>-->
 
 
 <div class="container col-lg-4 col-lg-offset-4">
@@ -30,7 +30,7 @@
         Please enter password.
       </div>
     </div>
-    <button class="btn btn-primary" [disabled]="!form.valid">Login</button>
+    <button class="btn btn-primary" [disabled]="!form.valid" (click)="onloginClick()">Login</button>
   </form>
   <br>
 </div> 
