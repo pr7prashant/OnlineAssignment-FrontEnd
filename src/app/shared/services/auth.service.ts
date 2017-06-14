@@ -12,6 +12,7 @@ import { Router } from "@angular/router";
 export class AuthService {
     isLoggedIn = false;
     loginError = "";
+    fname = "";
     user: Observable<firebase.User>;
     faculty: FirebaseListObservable<any[]>;
 
@@ -39,8 +40,10 @@ export class AuthService {
                     }
                 });                                    
                 this.faculty.forEach(users => {
-                    if(users[0].type == "faculty")
+                    if(users[0].type == "faculty") {
+                        this.fname = users[0].fname;
                         this._router.navigate(["/faculty/home"]);
+                    }                     
                 });              
             },
             err => {
