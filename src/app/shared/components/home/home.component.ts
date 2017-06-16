@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
     this.form = this._fb.group({
       email: ['', Validators.compose([ Validators.required, Validators.email ])],
       password: ['', Validators.compose([ Validators.required ])]
-    })
+    });
   }
 
   onloginClick() {

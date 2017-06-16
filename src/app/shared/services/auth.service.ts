@@ -27,7 +27,7 @@ export class AuthService {
     login(email: string, password: string) {
         console.log("in auth sevice...");
 
-        // user verification code here
+        // user verification code
         var subscription = Observable.fromPromise(this.afAuth.auth.signInWithEmailAndPassword(email, password));
         subscription.subscribe(
             res => {
@@ -42,7 +42,7 @@ export class AuthService {
                 this.faculty.forEach(users => {
                     if(users[0].type == "faculty") {
                         this.fname = users[0].fname;
-                        this._router.navigate(["/faculty/home"]);
+                        this._router.navigate(["/faculty"]);
                     }                     
                 });              
             },
