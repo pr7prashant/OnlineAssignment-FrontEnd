@@ -3,40 +3,47 @@ import { AngularFireDatabase, FirebaseListObservable } from "angularfire2/databa
 import { Upload } from "app/shared/services/upload";
 import { AngularFireModule } from "angularfire2";
 import * as firebase from 'firebase';
+import { AuthService } from "app/shared/services/auth.service";
 
 @Injectable()
 export class UploadService {
-  constructor(private _af: AngularFireModule, private db: AngularFireDatabase) { }
+  constructor(
+    private _af: AngularFireModule, 
+    private _db: AngularFireDatabase,
+    private _authService: AuthService
+    ) { }
 
-  private basePath: string = '/assignments';
+  private _uid = this._authService.uid;
+  private basePath: string = '/assignments/' + this._uid + '/';
   private uploadTask: firebase.storage.UploadTask;
   uploads: FirebaseListObservable<Upload>;
+  keys: any[] = [];
 
   pushUpload(upload: Upload) {
     let storageRef = firebase.storage().ref();
     this.uploadTask = storageRef.child(`${this.basePath}/${upload.file.name}`).put(upload.file);
-
     this.uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
       (snapshot) => {
         // upload in progress
-        upload.progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        upload.progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
       },
       (error) => {
         // upload failed
-        console.log(error)
+        console.log(error);
       },
       () => {
         // upload success
-        upload.url = this.uploadTask.snapshot.downloadURL
-        upload.name = upload.file.name
-        this.saveFileData(upload)
+        upload.url = this.uploadTask.snapshot.downloadURL;
+        upload.name = upload.file.name;
+        this.saveFileData(upload);
       }
     );
   }
 
   // Writes the file details to the realtime db
   private saveFileData(upload: Upload) {
-    this.db.list(`${this.basePath}/`).push(upload);
+    const asnKey = this._db.list(`${this.basePath}/`).push(upload);
+    this.keys.push(asnKey.key);
   }
 
   deleteUpload(upload: Upload) {
@@ -46,9 +53,10 @@ export class UploadService {
       })
       .catch(error => console.log(error))
   }
+
   // Deletes the file details from the realtime db
   private deleteFileData(key: string) {
-    return this.db.list(`${this.basePath}/`).remove(key);
+    return this._db.list(`${this.basePath}/`).remove(key);
   }
 
   // Firebase files must have unique names in their respective storage dir

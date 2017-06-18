@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { UploadComponent } from '../shared/components/upload/upload.component';
 import { UploadService } from "app/shared/services/upload.service";
+import { CreateAssignmentService } from "app/faculty/create-assignment/create-assignment.service";
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { UploadService } from "app/shared/services/upload.service";
   providers: [
     AuthGuard,
     AuthService,
-    UploadService
+    UploadService,
+    CreateAssignmentService
   ]
 })
 export class FacultyModule { }
