@@ -9,15 +9,14 @@ import { AuthService } from "app/shared/services/auth.service";
 export class UploadService {
   constructor(
     private _af: AngularFireModule, 
-    private _db: AngularFireDatabase,
-    private _authService: AuthService
+    private _db: AngularFireDatabase
     ) { }
 
-  private _uid = this._authService.uid;
+  private _uid = AuthService.uid;
   private basePath: string = '/assignments/' + this._uid + '/';
   private uploadTask: firebase.storage.UploadTask;
   uploads: FirebaseListObservable<Upload>;
-  keys: any[] = [];
+  keys: any[] = []; // keys for uploaded assignment
 
   pushUpload(upload: Upload) {
     let storageRef = firebase.storage().ref();

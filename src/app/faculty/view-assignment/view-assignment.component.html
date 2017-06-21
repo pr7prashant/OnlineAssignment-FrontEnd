@@ -1,0 +1,42 @@
+<br>
+<h3>Assignment Details</h3>
+<br>
+
+<table class="table table-bordered">
+  <tr>
+    <td>Course</td>
+    <td> {{ (assignment | async)?.course }} </td>
+  </tr>
+  <tr>
+    <td>Batch</td>
+    <td> {{ (assignment | async)?.batch }} </td>
+  </tr>
+  <tr>
+    <td>Subject</td>
+    <td> {{ (assignment | async)?.subject }} </td>
+  </tr>
+  <tr>
+    <td>Assignment Name</td>
+    <td> {{ (assignment | async)?.AsnName }} </td>
+  </tr>
+  <tr>
+    <td>Assignment Description</td>
+    <td> {{ (assignment | async)?.AsnDesc }} </td>
+  </tr>
+  <tr>
+    <td>Assignment Due Date</td>
+    <td> {{ (assignment | async)?.dueDate }} </td>
+  </tr>
+</table>
+
+<h4 *ngIf="fileNames.length > 0">Attachments</h4>
+<table class="table table-bordered" *ngIf="fileNames.length > 0">
+  <tr>
+    <th>File Name</th>
+    <th>Download</th>
+  </tr>
+  <tr *ngFor="let fileName of fileNames">
+    <td>{{ fileName }}</td>
+    <td><i class="glyphicon glyphicon-download-alt" (click)="downloadAttachment(fileName)"></i></td>
+  </tr>
+</table>

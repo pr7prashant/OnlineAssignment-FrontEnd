@@ -5,6 +5,8 @@ import { FacultyHomeComponent } from "app/faculty/faculty-home/faculty-home.comp
 import { AuthGuard } from "app/shared/guards/auth-guard.service";
 import { CreateAssignmentComponent } from "app/faculty/create-assignment/create-assignment.component";
 import { MyAssignmentsComponent } from "app/faculty/my-assignments/my-assignments.component";
+import { ViewAssignmentComponent } from "app/faculty/view-assignment/view-assignment.component";
+import { EditAssignmentComponent } from "app/faculty/edit-assignment/edit-assignment.component";
 
 export const facultyRoutes: Routes = [
     {
@@ -23,6 +25,14 @@ export const facultyRoutes: Routes = [
             {
                 path: 'assignments',
                 component: MyAssignmentsComponent
+            },
+            {
+                path: 'assignments/view/:AsnDetailKey',
+                component: ViewAssignmentComponent
+            },
+            {
+                path: 'assignments/edit/:AsnDetailKey',
+                component: EditAssignmentComponent
             }
         ]
     }
@@ -38,4 +48,10 @@ export const facultyRoutes: Routes = [
 })
 
 export class FacultyRoutingModule { }
-export const facultyRoutingComponents = [FacultyHomeComponent, CreateAssignmentComponent, MyAssignmentsComponent]
+export const facultyRoutingComponents = [
+    FacultyHomeComponent, 
+    CreateAssignmentComponent, 
+    MyAssignmentsComponent,
+    ViewAssignmentComponent,
+    EditAssignmentComponent
+    ]

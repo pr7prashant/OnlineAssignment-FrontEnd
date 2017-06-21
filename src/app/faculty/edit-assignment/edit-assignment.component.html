@@ -1,7 +1,11 @@
 <br>
+<h3> Edit Assignment </h3> <hr>
 <div class="col-lg-4 col-lg-offset-4">
-  <div class="alert alert-success" *ngIf="asnDetailKey">
-    Assignment Created.
+  <div class="alert alert-success" *ngIf="edited==true">
+    Assignment Edited.
+  </div>
+  <div class="alert alert-success" *ngIf="edited==false">
+    Oops.. An Error occured while editing. Please try again.
   </div>
   <form [formGroup]="form">
     <div class="form-group">
@@ -49,6 +53,6 @@
     <div class="form-group">
       <upload></upload>
     </div>
-    <button type="button" class="btn btn-primary" (click)="onCreate()" [disabled]="!form.valid">Create Assignment</button>
+    <button type="button" class="btn btn-primary" (click)="onEdit()" [disabled]="!form.valid">Edit Assignment</button>
   </form>
 </div>

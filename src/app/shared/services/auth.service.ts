@@ -13,7 +13,7 @@ export class AuthService {
     isLoggedIn = false;
     loginError = "";
     fname = "";
-    uid;
+    static uid;
     user: Observable<firebase.User>;
     faculty: FirebaseListObservable<any[]>;
 
@@ -42,7 +42,7 @@ export class AuthService {
                 });                                    
                 this.faculty.forEach(users => {
                     if(users[0].type == "faculty") {
-                        this.uid = users[0].$key;
+                        AuthService.uid = users[0].$key;
                         this.fname = users[0].fname;
                         this._router.navigate(["/faculty"]);
                     }                     

@@ -1,3 +1,15 @@
-<p>
-  my-assignments works!
-</p>
+<br>
+<table class="table table-bordered">
+  <tr>
+    <th>Name</th>
+    <th>Course</th>
+    <th>Edit</th>
+    <th>Delete</th>
+  </tr>
+  <tr *ngFor="let assignment of assignments | async">
+    <td> <span class="AsnName" [routerLink]="['view', assignment.$key]">{{ assignment.AsnName }} </span> </td>
+    <td> {{ assignment.course }}  {{ assignment.batch }} </td>
+    <td> <i class="glyphicon glyphicon-edit" [routerLink]="['edit', assignment.$key]"></i> </td>
+    <td> <i class="glyphicon glyphicon-trash"></i> </td>
+  </tr>
+</table>

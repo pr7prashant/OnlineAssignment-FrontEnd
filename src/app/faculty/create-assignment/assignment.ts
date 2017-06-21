@@ -10,5 +10,15 @@ export class Assignment {
     fileKey: any[] = [];
     createdAt: Date = new Date();
 
-    constructor() { }
+    constructor() {
+        this.course = "";
+        this.batch = "";
+        this.subject = "";
+        this.uid = "";
+        this.AsnName = "";
+        this.AsnDesc = "";
+        this.dueDate = new Date();
+        this.fileKey = [];
+        this.createdAt = new Date();
+    }
 }
