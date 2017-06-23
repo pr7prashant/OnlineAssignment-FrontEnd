@@ -22,7 +22,7 @@ import { AuthGuard } from "app/shared/guards/auth-guard.service";
     AppComponent,
     NavbarComponent,
     FooterComponent,
-    routingComponents
+    routingComponents    
   ],
   imports: [
     BrowserModule,

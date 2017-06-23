@@ -56,10 +56,10 @@ export class AuthService {
     }
 
     logout() {
-        this.isLoggedIn = false;
         this.loginError = "";
-        this.afAuth.auth.signOut();
+        this.isLoggedIn = false;
         this._router.navigate(['']);
+        this.afAuth.auth.signOut();
     }
 
 }

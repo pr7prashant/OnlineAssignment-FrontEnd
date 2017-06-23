@@ -1,8 +1,11 @@
 <br>
 <h3>Assignment Details</h3>
-<br>
-
-<table class="table table-bordered">
+<hr>
+<div class="container" *ngIf="isLoading">
+  <spinner></spinner>
+  <span>Loading Assignment Details...</span>
+</div>
+<table class="table table-bordered" *ngIf="!isLoading">
   <tr>
     <td>Course</td>
     <td> {{ (assignment | async)?.course }} </td>
@@ -29,8 +32,8 @@
   </tr>
 </table>
 
-<h4 *ngIf="fileNames.length > 0">Attachments</h4>
-<table class="table table-bordered" *ngIf="fileNames.length > 0">
+<h4 *ngIf="fileNames.length > 0 && !isLoading">Attachments</h4>
+<table class="table table-bordered" *ngIf="fileNames.length > 0 && !isLoading">
   <tr>
     <th>File Name</th>
     <th>Download</th>
@@ -40,3 +43,8 @@
     <td><i class="glyphicon glyphicon-download-alt" (click)="downloadAttachment(fileName)"></i></td>
   </tr>
 </table>
+<div>
+  <button class="btn btn-primary" routerLink="/faculty/assignments">Back</button>
+  <button class="btn btn-info" [routerLink]="['/faculty/assignments/edit', asnDetailKey]">Edit</button>
+  <button class="btn btn-danger" (click)="delete()">Delete</button>
+</div>

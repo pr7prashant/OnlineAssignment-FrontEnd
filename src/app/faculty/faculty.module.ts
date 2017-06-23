@@ -10,6 +10,8 @@ import { UploadService } from "app/shared/services/upload.service";
 import { CreateAssignmentService } from "app/faculty/create-assignment/create-assignment.service";
 import { GetAssignmentService } from "app/shared/services/getAssignments.service";
 import { EditAssignmentService } from "app/faculty/edit-assignment/edit-assignment.service";
+import { SpinnerComponent } from "app/shared/components/spinner/spinner.component";
+import { DeleteAssignmentService } from "app/shared/services/deleteAssignment.service";
 
 @NgModule({
   imports: [
@@ -20,7 +22,8 @@ import { EditAssignmentService } from "app/faculty/edit-assignment/edit-assignme
   ],
   declarations: [
     facultyRoutingComponents,
-    UploadComponent
+    UploadComponent,
+    SpinnerComponent
   ],
   providers: [
     AuthGuard,
@@ -28,7 +31,8 @@ import { EditAssignmentService } from "app/faculty/edit-assignment/edit-assignme
     UploadService,
     CreateAssignmentService,
     GetAssignmentService,
-    EditAssignmentService
+    EditAssignmentService,
+    DeleteAssignmentService
   ]
 })
 export class FacultyModule { }

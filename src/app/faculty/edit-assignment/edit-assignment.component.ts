@@ -37,7 +37,6 @@ export class EditAssignmentComponent implements OnInit {
     private _editAsnSvc: EditAssignmentService,
   ) {
     this.initForm();
-    //this.validate();
   }
 
   ngOnInit() {

@@ -1,10 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
+
 import { GetAssignmentService } from "app/shared/services/getAssignments.service";
 import { AuthService } from "app/shared/services/auth.service";
+import { DeleteAssignmentService } from "app/shared/services/deleteAssignment.service";
 
 import { FirebaseObjectObservable, FirebaseListObservable, AngularFireDatabase } from "angularfire2/database";
 import * as firebase from 'firebase';
+import { Assignment } from "app/faculty/create-assignment/assignment";
 
 @Component({
   selector: 'app-view-assignment',
@@ -16,6 +19,7 @@ export class ViewAssignmentComponent implements OnInit, OnDestroy {
   fileKeys = []; // assignment attachments if any
   fileNames = [];
   asnDetailKey: string;
+  isLoading = true;
 
   asnFiles: FirebaseObjectObservable<any> // assignment attachments
   assignment: FirebaseObjectObservable<any>; // assignment detail object
@@ -23,7 +27,9 @@ export class ViewAssignmentComponent implements OnInit, OnDestroy {
   constructor(
     private _routeParams: ActivatedRoute,
     private _getAsnService: GetAssignmentService,
-    private _db: AngularFireDatabase
+    private _db: AngularFireDatabase,
+    private _delAsnService: DeleteAssignmentService,
+    private _router: Router
   ) { }
 
   ngOnInit() {
@@ -49,11 +55,10 @@ export class ViewAssignmentComponent implements OnInit, OnDestroy {
         this.fileKeys.push(asnDetails.fileKey);
         this.fileKeys[0].forEach(asnFileKey => {
           this.asnFiles = this._getAsnService.getAssignmentFiles(asnFileKey);
-          this.asnFiles.subscribe(file => {
-            this.fileNames.push(file.name);
-          });
+          this.asnFiles.subscribe(file => this.fileNames.push(file.name));
         });
       }
+      this.isLoading = false;
     });
   }
 
@@ -70,6 +75,24 @@ export class ViewAssignmentComponent implements OnInit, OnDestroy {
       xhr.send();
       window.open(url);
     });
+  }
+
+  delete() {
+    var asn = new Assignment();
+    this.assignment.subscribe(asmt => {
+      asn.$key = asmt.$key;
+      asn.course = asmt.course;
+      asn.batch = asmt.batch;
+      asn.subject = asmt.subject;
+      asn.AsnName = asmt.AsnName;
+      asn.AsnDesc = asmt.AsnDesc;
+      asn.fileKey = asmt.fileKey;
+      asn.uid = asmt.uid;
+      asn.createdAt = asmt.createdAt;
+      asn.dueDate = asmt.dueDate;
+    });
+    this._delAsnService.deleteAssignment(asn);
+    this._router.navigate(['/faculty/assignments']);
   }
 
 

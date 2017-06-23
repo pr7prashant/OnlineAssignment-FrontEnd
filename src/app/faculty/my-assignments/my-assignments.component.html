@@ -1,5 +1,9 @@
 <br>
-<table class="table table-bordered">
+<h3>My Assignments</h3>
+<hr>
+<spinner *ngIf="isLoading"></spinner>
+<span *ngIf="isLoading">Loading Assignments</span>
+<table class="table table-bordered" *ngIf="!isLoading">
   <tr>
     <th>Name</th>
     <th>Course</th>
@@ -10,6 +14,6 @@
     <td> <span class="AsnName" [routerLink]="['view', assignment.$key]">{{ assignment.AsnName }} </span> </td>
     <td> {{ assignment.course }}  {{ assignment.batch }} </td>
     <td> <i class="glyphicon glyphicon-edit" [routerLink]="['edit', assignment.$key]"></i> </td>
-    <td> <i class="glyphicon glyphicon-trash"></i> </td>
+    <td> <i class="glyphicon glyphicon-trash" (click)="onDelete(assignment)"></i> </td>
   </tr>
 </table>
