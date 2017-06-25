@@ -43,8 +43,9 @@
     <td><i class="glyphicon glyphicon-download-alt" (click)="downloadAttachment(fileName)"></i></td>
   </tr>
 </table>
+<br>
 <div *ngIf="!isLoading">
-  <button class="btn btn-primary" routerLink="/faculty/assignments">Back</button>
-  <button class="btn btn-info" [routerLink]="['/faculty/assignments/edit', asnDetailKey]">Edit</button>
-  <button class="btn btn-danger" (click)="delete()">Delete</button>
+  <h3>Submit</h3>
+  <hr>
+  <upload [basePath]="basePath"></upload>
 </div>

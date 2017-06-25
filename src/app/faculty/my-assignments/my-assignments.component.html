@@ -1,8 +1,11 @@
 <br>
 <h3>My Assignments</h3>
 <hr>
-<spinner *ngIf="isLoading"></spinner>
-<span *ngIf="isLoading">Loading Assignments</span>
+<div *ngIf="isLoading">
+  <spinner></spinner>
+  <span>Loading Assignments</span>
+</div>
+
 <table class="table table-bordered" *ngIf="!isLoading">
   <tr>
     <th>Name</th>
@@ -12,7 +15,7 @@
   </tr>
   <tr *ngFor="let assignment of assignments | async">
     <td> <span class="AsnName" [routerLink]="['view', assignment.$key]">{{ assignment.AsnName }} </span> </td>
-    <td> {{ assignment.course }}  {{ assignment.batch }} </td>
+    <td> {{ assignment.course }} {{ assignment.batch }} </td>
     <td> <i class="glyphicon glyphicon-edit" [routerLink]="['edit', assignment.$key]"></i> </td>
     <td> <i class="glyphicon glyphicon-trash" (click)="onDelete(assignment)"></i> </td>
   </tr>

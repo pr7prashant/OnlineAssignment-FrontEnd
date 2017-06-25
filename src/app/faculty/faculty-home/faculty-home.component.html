@@ -1,13 +1,10 @@
-
 <div class="container">
   <ul class="nav nav-tabs">
-  <li role="presentation" (click)="onclick1()" [class]="isActive1"><a routerLink="assignments/create">Create Assignment</a></li>
-  <li role="presentation" (click)="onclick2()" [class]="isActive2"><a routerLink="assignments">My Assignments</a></li>
-</ul>
+    <li role="presentation" (click)="onclick1()" [class]="isActive1"><a routerLink="assignments/create">Create Assignment</a></li>
+    <li role="presentation" (click)="onclick2()" [class]="isActive2"><a routerLink="assignments">My Assignments</a></li>
+  </ul>
 </div>
 
 <div class="container">
-  <router-outlet></router-outlet>  
+  <router-outlet></router-outlet>
 </div>
-
-

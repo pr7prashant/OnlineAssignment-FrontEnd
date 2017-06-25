@@ -14,6 +14,8 @@ export class AuthService {
     loginError = "";
     fname = "";
     static uid;
+    static courseBatch;
+    subscription;
     user: Observable<firebase.User>;
     faculty: FirebaseListObservable<any[]>;
 
@@ -30,7 +32,7 @@ export class AuthService {
 
         // user verification code
         var subscription = Observable.fromPromise(this.afAuth.auth.signInWithEmailAndPassword(email, password));
-        subscription.subscribe(
+        this.subscription =  subscription.subscribe(
             res => {
                 console.log("logging in...");
                 this.isLoggedIn = true;
@@ -39,14 +41,20 @@ export class AuthService {
                         orderByChild: 'email',
                         equalTo: email
                     }
-                });                                    
+                });
                 this.faculty.forEach(users => {
-                    if(users[0].type == "faculty") {
+                    if (users[0].type == "faculty") {
                         AuthService.uid = users[0].$key;
                         this.fname = users[0].fname;
                         this._router.navigate(["/faculty"]);
-                    }                     
-                });              
+                    }
+                    if (users[0].type == "student") {
+                        AuthService.uid = users[0].$key;
+                        AuthService.courseBatch = users[0].courseBatch;
+                        this.fname = users[0].fname;
+                        this._router.navigate(["/student"]);
+                    }
+                });
             },
             err => {
                 this.loginError = err.code;
@@ -56,10 +64,11 @@ export class AuthService {
     }
 
     logout() {
+        this._router.navigate(['']);
         this.loginError = "";
         this.isLoggedIn = false;
-        this._router.navigate(['']);
         this.afAuth.auth.signOut();
+        this.subscription.unsubscribe();
     }
 
 }

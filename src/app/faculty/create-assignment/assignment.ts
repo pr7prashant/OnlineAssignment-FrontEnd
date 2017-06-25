@@ -8,6 +8,7 @@ export class Assignment {
     AsnDesc: string;
     dueDate: Date;
     fileKey: any[] = [];
+    courseBatch: string;
     createdAt: Date = new Date();
 
     constructor() {
@@ -19,6 +20,7 @@ export class Assignment {
         this.AsnDesc = "";
         this.dueDate = new Date();
         this.fileKey = [];
+        this.courseBatch = "";
         this.createdAt = new Date();
     }
 }

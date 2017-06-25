@@ -1,28 +1,28 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
+
+import * as firebase from 'firebase';
+import { AngularFireDatabase, FirebaseObjectObservable } from "angularfire2/database";
 
 import { GetAssignmentService } from "app/shared/services/getAssignments.service";
 import { AuthService } from "app/shared/services/auth.service";
-import { DeleteAssignmentService } from "app/shared/services/deleteAssignment.service";
-
-import { FirebaseObjectObservable, FirebaseListObservable, AngularFireDatabase } from "angularfire2/database";
-import * as firebase from 'firebase';
-import { Assignment } from "app/faculty/create-assignment/assignment";
 
 @Component({
   selector: 'app-view-assignment',
   templateUrl: './view-assignment.component.html',
   styleUrls: ['./view-assignment.component.css']
 })
-export class ViewAssignmentComponent implements OnInit, OnDestroy {
+export class ViewAssignmentComponent implements OnInit {
 
   fileKeys = []; // assignment attachments if any
   fileNames = [];
   asnDetailKey: string;
-  isLoading = true;
   subscription1;
   subscription2;
   subscription3;
+  asnAuthorId;
+  basePath: string = '/submissions/' + AuthService.uid + '/';
+  isLoading = true;
 
   asnFiles: FirebaseObjectObservable<any> // assignment attachments
   assignment: FirebaseObjectObservable<any>; // assignment detail object
@@ -31,7 +31,6 @@ export class ViewAssignmentComponent implements OnInit, OnDestroy {
     private _routeParams: ActivatedRoute,
     private _getAsnService: GetAssignmentService,
     private _db: AngularFireDatabase,
-    private _delAsnService: DeleteAssignmentService,
     private _router: Router
   ) { }
 
@@ -48,7 +47,6 @@ export class ViewAssignmentComponent implements OnInit, OnDestroy {
     this.subscription3.unsubscribe();
   }
 
-  // Get assignment detail key from route parameter
   getRouteParams() {
     this.subscription1 = this._routeParams.params.subscribe(params => {
       this.asnDetailKey = params['AsnDetailKey'];
@@ -57,10 +55,11 @@ export class ViewAssignmentComponent implements OnInit, OnDestroy {
 
   getAttachments() {
     this.subscription2 = this.assignment.subscribe(asnDetails => {
+      this.asnAuthorId = asnDetails.uid;
       if (asnDetails.fileKey) {
         this.fileKeys.push(asnDetails.fileKey);
         this.fileKeys[0].forEach(asnFileKey => {
-          this.asnFiles = this._getAsnService.getAssignmentFiles(asnFileKey, AuthService.uid);
+          this.asnFiles = this._getAsnService.getAssignmentFiles(asnFileKey, this.asnAuthorId);
           this.subscription3 = this.asnFiles.subscribe(file => this.fileNames.push(file.name));
         });
       }
@@ -70,7 +69,7 @@ export class ViewAssignmentComponent implements OnInit, OnDestroy {
 
   downloadAttachment(fileName) {
     var uid = AuthService.uid;
-    let storageRef = firebase.storage().ref().child('assignments/' + uid + '/' + fileName);
+    let storageRef = firebase.storage().ref().child('assignments/' + this.asnAuthorId + '/' + fileName);
     storageRef.getDownloadURL().then(url => {
       var xhr = new XMLHttpRequest();
       xhr.responseType = 'blob';
@@ -82,24 +81,5 @@ export class ViewAssignmentComponent implements OnInit, OnDestroy {
       window.open(url);
     });
   }
-
-  delete() {
-    var asn = new Assignment();
-    this.assignment.subscribe(asmt => {
-      asn.$key = asmt.$key;
-      asn.course = asmt.course;
-      asn.batch = asmt.batch;
-      asn.subject = asmt.subject;
-      asn.AsnName = asmt.AsnName;
-      asn.AsnDesc = asmt.AsnDesc;
-      asn.fileKey = asmt.fileKey;
-      asn.uid = asmt.uid;
-      asn.createdAt = asmt.createdAt;
-      asn.dueDate = asmt.dueDate;
-    });
-    this._delAsnService.deleteAssignment(asn);
-    this._router.navigate(['/faculty/assignments']);
-  }
-
 
 }

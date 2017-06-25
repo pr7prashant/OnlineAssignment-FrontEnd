@@ -1,0 +1,7 @@
+i:hover {
+    cursor: pointer;
+}
+
+i.glyphicon.glyphicon-download-alt {
+    color: #13db98;
+}

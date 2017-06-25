@@ -16,7 +16,8 @@ export const facultyRoutes: Routes = [
         children: [
             {
                 path: '',
-                component: CreateAssignmentComponent
+                redirectTo: 'assignments/create',
+                pathMatch: 'full'
             },
             {
                 path: 'assignments/create',

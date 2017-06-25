@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-faculty-home',
-  templateUrl: './faculty-home.component.html',
-  styleUrls: ['./faculty-home.component.css']
+  selector: 'app-student-home',
+  templateUrl: './student-home.component.html',
+  styleUrls: ['./student-home.component.css']
 })
-export class FacultyHomeComponent implements OnInit {
+export class StudentHomeComponent implements OnInit {
 
   isActive1 = "active";
   isActive2 = "";

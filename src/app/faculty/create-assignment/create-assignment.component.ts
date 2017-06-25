@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AngularFireDatabase, FirebaseListObservable } from "angularfire2/database";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
-import { UploadComponent } from '../../shared/components/upload/upload.component';
 import { UploadService } from "app/shared/services/upload.service";
 import { CreateAssignmentService } from "app/faculty/create-assignment/create-assignment.service";
 import { AuthService } from "app/shared/services/auth.service";
@@ -19,6 +18,7 @@ export class CreateAssignmentComponent implements OnInit {
   form: FormGroup;
   keys: any[] = [];
   asnDetailKey = "";
+  basePath: string = '/assignments/' + AuthService.uid + '/';
   today;
 
   constructor(

@@ -1,5 +1,6 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -8,28 +9,29 @@ import { environment } from '../environments/environment';
 import * as firebase from 'firebase';
 
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './shared/components/navbar/navbar.component';
-import { FooterComponent } from './shared/components/footer/footer.component';
-
 import { AppRoutingModule, routingComponents } from "app/app-routing.module";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+
 import { FacultyModule } from "app/faculty/faculty.module";
-import { facultyRoutingComponents } from "app/faculty/faculty-routing.module";
+import { StudentModule } from "app/student/student.module";
+
 import { AuthGuard } from "app/shared/guards/auth-guard.service";
+import { SharedModule } from "app/shared/shared.module";
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
-    FooterComponent,
-    routingComponents    
+    routingComponents
   ],
   imports: [
     BrowserModule,
-    FacultyModule,
-    AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+
+    SharedModule,
+    FacultyModule,
+    StudentModule,
+    AppRoutingModule,
+    
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFireDatabaseModule,

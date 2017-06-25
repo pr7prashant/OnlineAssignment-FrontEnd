@@ -30,6 +30,7 @@ export class CreateAssignmentService {
         this._assignment.dueDate = form.controls['dueDate'].value;
         this._assignment.uid = AuthService.uid;
         this._assignment.fileKey = keys;
+        this._assignment.courseBatch = form.controls['course'].value + form.controls['batch'].value;
         this._assignment.createdAt = new Date();
 
         var asnDetailKey = this._db.list(`${this.basePath}/`).push(this._assignment);

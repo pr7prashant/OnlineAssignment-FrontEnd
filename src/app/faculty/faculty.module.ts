@@ -5,25 +5,23 @@ import { AuthGuard } from "app/shared/guards/auth-guard.service";
 import { AuthService } from "app/shared/services/auth.service";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
-import { UploadComponent } from '../shared/components/upload/upload.component';
 import { UploadService } from "app/shared/services/upload.service";
 import { CreateAssignmentService } from "app/faculty/create-assignment/create-assignment.service";
 import { GetAssignmentService } from "app/shared/services/getAssignments.service";
 import { EditAssignmentService } from "app/faculty/edit-assignment/edit-assignment.service";
-import { SpinnerComponent } from "app/shared/components/spinner/spinner.component";
 import { DeleteAssignmentService } from "app/shared/services/deleteAssignment.service";
+import { SharedModule } from "app/shared/shared.module";
 
 @NgModule({
   imports: [
     CommonModule,
     FacultyRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule  
   ],
   declarations: [
-    facultyRoutingComponents,
-    UploadComponent,
-    SpinnerComponent
+    facultyRoutingComponents
   ],
   providers: [
     AuthGuard,

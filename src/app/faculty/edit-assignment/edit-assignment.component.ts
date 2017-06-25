@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
@@ -15,7 +15,7 @@ import { EditAssignmentService } from "app/faculty/edit-assignment/edit-assignme
   templateUrl: './edit-assignment.component.html',
   styleUrls: ['./edit-assignment.component.css']
 })
-export class EditAssignmentComponent implements OnInit {
+export class EditAssignmentComponent implements OnInit, OnDestroy {
 
   courses: FirebaseListObservable<any>;
   batches: FirebaseListObservable<any>;
@@ -27,6 +27,8 @@ export class EditAssignmentComponent implements OnInit {
   asnDetailKey: string;
   keys: any[] = [];
   edited: boolean;
+  subscription1;
+  subscription2;
 
   constructor(
     private _routeParams: ActivatedRoute,
@@ -42,8 +44,13 @@ export class EditAssignmentComponent implements OnInit {
   ngOnInit() {
     this.getRouteParams();
     this.assignment = this._getAsnService.getAssignment(this.asnDetailKey);
-    this.assignment.subscribe(asnDetails => this.validateForm(asnDetails));
+    this.subscription1 = this.assignment.subscribe(asnDetails => this.validateForm(asnDetails));
     this.getCourses();
+  }
+
+  ngOnDestroy() {
+    this.subscription1.unsubscribe();
+    this.subscription2.unsubscribe();
   }
 
   initForm() {
@@ -72,7 +79,7 @@ export class EditAssignmentComponent implements OnInit {
 
   // Get assignment detail key from route parameter
   getRouteParams() {
-    this._routeParams.params.subscribe(params => {
+    this.subscription2 = this._routeParams.params.subscribe(params => {
       this.asnDetailKey = params['AsnDetailKey'];
     });
   }

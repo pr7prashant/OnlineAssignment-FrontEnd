@@ -12,13 +12,14 @@ export class UploadService {
     private _db: AngularFireDatabase
     ) { }
 
-  private _uid = AuthService.uid;
-  private basePath: string = '/assignments/' + this._uid + '/';
+  basePath: string;
   private uploadTask: firebase.storage.UploadTask;
   uploads: FirebaseListObservable<Upload>;
   keys: any[] = []; // keys for uploaded assignment
 
-  pushUpload(upload: Upload) {
+  pushUpload(upload: Upload, basePath: string) {
+    this.keys = [];
+    this.basePath = basePath;
     let storageRef = firebase.storage().ref();
     this.uploadTask = storageRef.child(`${this.basePath}/${upload.file.name}`).put(upload.file);
     this.uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
