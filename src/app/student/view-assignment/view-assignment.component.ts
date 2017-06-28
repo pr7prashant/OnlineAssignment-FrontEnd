@@ -21,6 +21,7 @@ export class ViewAssignmentComponent implements OnInit {
   subscription2;
   subscription3;
   asnAuthorId;
+  status;
   basePath: string = '/submissions/' + AuthService.uid + '/';
   isLoading = true;
 
@@ -38,6 +39,7 @@ export class ViewAssignmentComponent implements OnInit {
     this.getRouteParams();
     this.assignment = this._getAsnService.getAssignment(this.asnDetailKey);
     this.getAttachments();
+    this.getStatus();
   }
 
   ngOnDestroy() {
@@ -79,6 +81,19 @@ export class ViewAssignmentComponent implements OnInit {
       xhr.open('GET', url);
       xhr.send();
       window.open(url);
+    });
+  }
+
+  getStatus() {
+    this._db.object(`/submission-detail/${this.asnDetailKey}/${AuthService.uid}/`).subscribe((obj) => {
+      if (obj.hasOwnProperty('$value') && !obj['$value']) {
+        // object does not exist
+        this.status = 'Not Submitted';
+      }
+      else {
+        // object exists.
+        this.status = 'Submitted';
+      }
     });
   }
 

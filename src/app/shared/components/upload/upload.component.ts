@@ -13,6 +13,7 @@ export class UploadComponent implements OnInit {
   selectedFiles: FileList;
   currentUpload: Upload;
   @Input() basePath: string;
+  @Input() asnDetailKey: string;
 
   constructor(private upSvc: UploadService) { }
 
@@ -33,9 +34,8 @@ export class UploadComponent implements OnInit {
     let filesIndex = _.range(files.length)
     _.each(filesIndex, (idx) => {
       this.currentUpload = new Upload(files[idx]);
-      this.upSvc.pushUpload(this.currentUpload, this.basePath);
-    }
-    )
+      this.upSvc.pushUpload(this.currentUpload, this.basePath, this.asnDetailKey);
+    })
   }
 
 }

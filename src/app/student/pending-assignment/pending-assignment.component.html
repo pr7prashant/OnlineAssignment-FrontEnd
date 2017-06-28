@@ -15,6 +15,6 @@
     <td> <span class="AsnName" [routerLink]="['view', assignment.$key]"> {{ assignment.AsnName }} </span> </td>
     <td> {{ assignment.subject }} </td>
     <td> {{ assignment.dueDate }} </td>
-    <td> <i class="glyphicon glyphicon-ok"></i> </td>
+    <td> <i class="glyphicon" [ngClass]="getStatus(assignment.$key)"></i> </td>
   </tr>
 </table>

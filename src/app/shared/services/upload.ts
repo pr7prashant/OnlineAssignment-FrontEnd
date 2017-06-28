@@ -4,6 +4,7 @@ export class Upload {
     name: string;
     url: string;
     progress: number;
+    asnDetailKey: string;
     createdAt: Date = new Date();
 
     constructor(file: File) {

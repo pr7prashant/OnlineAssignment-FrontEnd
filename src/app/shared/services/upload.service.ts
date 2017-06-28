@@ -8,16 +8,17 @@ import { AuthService } from "app/shared/services/auth.service";
 @Injectable()
 export class UploadService {
   constructor(
-    private _af: AngularFireModule, 
+    private _af: AngularFireModule,
     private _db: AngularFireDatabase
-    ) { }
+  ) { }
 
   basePath: string;
   private uploadTask: firebase.storage.UploadTask;
   uploads: FirebaseListObservable<Upload>;
   keys: any[] = []; // keys for uploaded assignment
+  submissions = [];
 
-  pushUpload(upload: Upload, basePath: string) {
+  pushUpload(upload: Upload, basePath: string, asnDetailKey) {
     this.keys = [];
     this.basePath = basePath;
     let storageRef = firebase.storage().ref();
@@ -35,15 +36,20 @@ export class UploadService {
         // upload success
         upload.url = this.uploadTask.snapshot.downloadURL;
         upload.name = upload.file.name;
-        this.saveFileData(upload);
+        upload.asnDetailKey = asnDetailKey;
+        this.saveFileData(upload, asnDetailKey);
       }
     );
   }
 
   // Writes the file details to the realtime db
-  private saveFileData(upload: Upload) {
+  private saveFileData(upload: Upload, asnDetailKey) {
     const asnKey = this._db.list(`${this.basePath}/`).push(upload);
     this.keys.push(asnKey.key);
+
+    if (this.basePath == '/submissions/' + AuthService.uid + '/')
+      this._db.list(`/submission-detail/${asnDetailKey}/${AuthService.uid}`).push(true); 
+
   }
 
   deleteUpload(upload: Upload) {

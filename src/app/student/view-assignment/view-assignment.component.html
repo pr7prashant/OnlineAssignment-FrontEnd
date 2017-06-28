@@ -45,7 +45,16 @@
 </table>
 <br>
 <div *ngIf="!isLoading">
-  <h3>Submit</h3>
-  <hr>
-  <upload [basePath]="basePath"></upload>
+  <div>
+    <h3>Status : {{ status }}</h3>
+    <hr>
+  </div>
+  <div *ngIf="status=='Not Submitted'">
+    <h3>Submit</h3>
+    <upload [basePath]="basePath" [asnDetailKey]="asnDetailKey"></upload>
+  </div>
+  <br>
+  <div>
+    <button class="btn btn-primary" routerLink="/student/pending">Back</button>
+  </div>
 </div>
