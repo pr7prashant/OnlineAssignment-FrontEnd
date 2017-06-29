@@ -1,0 +1,11 @@
+span.AsnName {
+    cursor: pointer;
+}
+
+i.glyphicon.glyphicon-ok {
+    color: #13db98;
+}
+
+i.glyphicon.glyphicon-remove {
+    color: #e74c3c;
+}

@@ -49,12 +49,12 @@
     <h3>Status : {{ status }}</h3>
     <hr>
   </div>
-  <div *ngIf="status=='Not Submitted'">
+  <div *ngIf="status=='Not Submitted' && dueDateValid">
     <h3>Submit</h3>
     <upload [basePath]="basePath" [asnDetailKey]="asnDetailKey"></upload>
   </div>
   <br>
   <div>
-    <button class="btn btn-primary" routerLink="/student/pending">Back</button>
+    <button class="btn btn-primary" routerLink="/student/{{ currentNav }}">Back</button>
   </div>
 </div>

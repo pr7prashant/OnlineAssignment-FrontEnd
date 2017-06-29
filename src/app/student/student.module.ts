@@ -4,6 +4,7 @@ import { studentRoutingComponents, StudentRoutingModule } from "app/student/stud
 import { SharedModule } from "app/shared/shared.module";
 import { ViewAssignmentComponent } from './view-assignment/view-assignment.component';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { PreviousAssignmentsComponent } from './previous-assignments/previous-assignments.component';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
   ],
   declarations: [
     studentRoutingComponents,
-    ViewAssignmentComponent
+    ViewAssignmentComponent,
+    PreviousAssignmentsComponent
   ]
 })
 export class StudentModule { }

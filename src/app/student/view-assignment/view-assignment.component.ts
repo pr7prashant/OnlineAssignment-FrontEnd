@@ -21,9 +21,12 @@ export class ViewAssignmentComponent implements OnInit {
   subscription2;
   subscription3;
   asnAuthorId;
+  asnDueDate;
+  dueDateValid = true;
   status;
   basePath: string = '/submissions/' + AuthService.uid + '/';
   isLoading = true;
+  currentNav;
 
   asnFiles: FirebaseObjectObservable<any> // assignment attachments
   assignment: FirebaseObjectObservable<any>; // assignment detail object
@@ -53,11 +56,17 @@ export class ViewAssignmentComponent implements OnInit {
     this.subscription1 = this._routeParams.params.subscribe(params => {
       this.asnDetailKey = params['AsnDetailKey'];
     });
+    if (this._routeParams.snapshot.url[0].path == "pending")
+      this.currentNav = "pending";
+    else
+      this.currentNav = "history";
   }
 
   getAttachments() {
+    var today = new Date().toJSON().split('T')[0];
     this.subscription2 = this.assignment.subscribe(asnDetails => {
       this.asnAuthorId = asnDetails.uid;
+      this.asnDueDate = asnDetails.dueDate;
       if (asnDetails.fileKey) {
         this.fileKeys.push(asnDetails.fileKey);
         this.fileKeys[0].forEach(asnFileKey => {
@@ -65,6 +74,9 @@ export class ViewAssignmentComponent implements OnInit {
           this.subscription3 = this.asnFiles.subscribe(file => this.fileNames.push(file.name));
         });
       }
+      if (this.asnDueDate < today)
+        this.dueDateValid = false;
+
       this.isLoading = false;
     });
   }
@@ -96,5 +108,6 @@ export class ViewAssignmentComponent implements OnInit {
       }
     });
   }
+
 
 }

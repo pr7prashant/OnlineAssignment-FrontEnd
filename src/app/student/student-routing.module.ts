@@ -5,6 +5,7 @@ import { AuthGuard } from "app/shared/guards/auth-guard.service";
 import { StudentHomeComponent } from "app/student/student-home/student-home.component";
 import { PendingAssignmentComponent } from "app/student/pending-assignment/pending-assignment.component";
 import { ViewAssignmentComponent } from "app/student/view-assignment/view-assignment.component";
+import { PreviousAssignmentsComponent } from "app/student/previous-assignments/previous-assignments.component";
 
 export const studentRoutes: Routes = [
     {
@@ -22,7 +23,15 @@ export const studentRoutes: Routes = [
                 component: PendingAssignmentComponent
             },
             {
+                path: 'history',
+                component: PreviousAssignmentsComponent
+            },
+            {
                 path: 'pending/view/:AsnDetailKey',
+                component: ViewAssignmentComponent
+            },
+            {
+                path: 'history/view/:AsnDetailKey',
                 component: ViewAssignmentComponent
             }
         ]
