@@ -44,7 +44,7 @@
   </tr>
 </table>
 <div *ngIf="!isLoading">
-  <button class="btn btn-primary" routerLink="/faculty/assignments">Back</button>
+  <button class="btn btn-primary" routerLink="/faculty/{{ currentNav }}">Back</button>
   <button class="btn btn-info" [routerLink]="['/faculty/assignments/edit', asnDetailKey]">Edit</button>
   <button class="btn btn-danger" (click)="delete()">Delete</button>
 </div>

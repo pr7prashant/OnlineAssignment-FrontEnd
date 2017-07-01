@@ -1,0 +1,11 @@
+i:hover, span.AsnName {
+    cursor: pointer;
+}
+
+i.glyphicon.glyphicon-edit {
+    color: #13db98;
+}
+
+i.glyphicon.glyphicon-trash {
+    color: #e74c3c;
+}

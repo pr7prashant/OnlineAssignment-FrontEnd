@@ -20,6 +20,7 @@ export class ViewAssignmentComponent implements OnInit, OnDestroy {
   fileNames = [];
   asnDetailKey: string;
   isLoading = true;
+  currentNav;
   subscription1;
   subscription2;
   subscription3;
@@ -53,6 +54,10 @@ export class ViewAssignmentComponent implements OnInit, OnDestroy {
     this.subscription1 = this._routeParams.params.subscribe(params => {
       this.asnDetailKey = params['AsnDetailKey'];
     });
+    if (this._routeParams.snapshot.url[1].path == "history")
+      this.currentNav = "assignments/history";
+    else
+      this.currentNav = "assignments";
   }
 
   getAttachments() {

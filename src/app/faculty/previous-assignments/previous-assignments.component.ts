@@ -1,21 +1,17 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FirebaseListObservable, FirebaseObjectObservable, AngularFireDatabase } from "angularfire2/database";
-
+import { Component, OnInit } from '@angular/core';
+import { FirebaseListObservable, AngularFireDatabase } from "angularfire2/database";
 import { GetAssignmentService } from "app/shared/services/getAssignments.service";
-import { AuthService } from "app/shared/services/auth.service";
 import { UploadService } from "app/shared/services/upload.service";
 import { DeleteAssignmentService } from "app/shared/services/deleteAssignment.service";
-
-import { Upload } from "app/shared/services/upload";
+import { AuthService } from "app/shared/services/auth.service";
 import { Assignment } from "app/faculty/create-assignment/assignment";
 
-
 @Component({
-  selector: 'app-my-assignments',
-  templateUrl: './my-assignments.component.html',
-  styleUrls: ['./my-assignments.component.css']
+  selector: 'app-previous-assignments',
+  templateUrl: './previous-assignments.component.html',
+  styleUrls: ['./previous-assignments.component.css']
 })
-export class MyAssignmentsComponent implements OnInit, OnDestroy {
+export class PreviousAssignmentsComponent implements OnInit {
 
   fileName: string;
   assignments: FirebaseListObservable<any>;
@@ -45,7 +41,7 @@ export class MyAssignmentsComponent implements OnInit, OnDestroy {
 
   filter(assignment: Assignment): boolean {
     this.today = new Date().toJSON().split('T')[0];
-    if (assignment.dueDate >= this.today)
+    if (assignment.dueDate < this.today)
       return false;
 
     return true;

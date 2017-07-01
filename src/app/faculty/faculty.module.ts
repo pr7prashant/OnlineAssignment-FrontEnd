@@ -11,6 +11,7 @@ import { GetAssignmentService } from "app/shared/services/getAssignments.service
 import { EditAssignmentService } from "app/faculty/edit-assignment/edit-assignment.service";
 import { DeleteAssignmentService } from "app/shared/services/deleteAssignment.service";
 import { SharedModule } from "app/shared/shared.module";
+import { PreviousAssignmentsComponent } from './previous-assignments/previous-assignments.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { SharedModule } from "app/shared/shared.module";
     SharedModule  
   ],
   declarations: [
-    facultyRoutingComponents
+    facultyRoutingComponents,
+    PreviousAssignmentsComponent
   ],
   providers: [
     AuthGuard,

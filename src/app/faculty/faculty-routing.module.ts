@@ -7,6 +7,7 @@ import { CreateAssignmentComponent } from "app/faculty/create-assignment/create-
 import { MyAssignmentsComponent } from "app/faculty/my-assignments/my-assignments.component";
 import { ViewAssignmentComponent } from "app/faculty/view-assignment/view-assignment.component";
 import { EditAssignmentComponent } from "app/faculty/edit-assignment/edit-assignment.component";
+import { PreviousAssignmentsComponent } from "app/faculty/previous-assignments/previous-assignments.component";
 
 export const facultyRoutes: Routes = [
     {
@@ -28,7 +29,15 @@ export const facultyRoutes: Routes = [
                 component: MyAssignmentsComponent
             },
             {
+                path: 'assignments/history',
+                component: PreviousAssignmentsComponent
+            },
+            {
                 path: 'assignments/view/:AsnDetailKey',
+                component: ViewAssignmentComponent
+            },
+            {
+                path: 'assignments/history/view/:AsnDetailKey',
                 component: ViewAssignmentComponent
             },
             {
