@@ -12,6 +12,7 @@ import { EditAssignmentService } from "app/faculty/edit-assignment/edit-assignme
 import { DeleteAssignmentService } from "app/shared/services/deleteAssignment.service";
 import { SharedModule } from "app/shared/shared.module";
 import { PreviousAssignmentsComponent } from './previous-assignments/previous-assignments.component';
+import { GetSubmissionService } from "app/shared/services/getSubmissions.service";
 
 @NgModule({
   imports: [
@@ -32,7 +33,8 @@ import { PreviousAssignmentsComponent } from './previous-assignments/previous-as
     CreateAssignmentService,
     GetAssignmentService,
     EditAssignmentService,
-    DeleteAssignmentService
+    DeleteAssignmentService,
+    GetSubmissionService
   ]
 })
 export class FacultyModule { }

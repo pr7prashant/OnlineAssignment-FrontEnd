@@ -48,3 +48,22 @@
   <button class="btn btn-info" [routerLink]="['/faculty/assignments/edit', asnDetailKey]">Edit</button>
   <button class="btn btn-danger" (click)="delete()">Delete</button>
 </div>
+
+<br>
+<h4 *ngIf="!isLoading">Submission Status</h4>
+<hr>
+
+<table class="table table-bordered" *ngIf="!isLoading">
+  <tr>
+    <th>Sno</th>
+    <th>Rno</th>
+    <th>Name</th>
+    <th>Download</th>
+  </tr>
+  <tr *ngFor="let sub of subList | async; let i = index">
+    <td>{{ i + 1 }}</td>
+    <td>{{ sub.studRno }}</td>
+    <td>{{ sub.studFName }} {{ sub.studLName }}</td>
+    <td><i class="glyphicon glyphicon-download-alt" (click)="downloadSubmission(sub)"></i></td>
+  </tr>
+</table>

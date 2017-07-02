@@ -4,12 +4,14 @@ import { Upload } from "app/shared/services/upload";
 import { AngularFireModule } from "angularfire2";
 import * as firebase from 'firebase';
 import { AuthService } from "app/shared/services/auth.service";
+import { Submission } from "app/shared/services/submission";
 
 @Injectable()
 export class UploadService {
   constructor(
     private _af: AngularFireModule,
-    private _db: AngularFireDatabase
+    private _db: AngularFireDatabase,
+    private _authService: AuthService
   ) { }
 
   basePath: string;
@@ -47,8 +49,18 @@ export class UploadService {
     const asnKey = this._db.list(`${this.basePath}/`).push(upload);
     this.keys.push(asnKey.key);
 
-    if (this.basePath == '/submissions/' + AuthService.uid + '/')
+    if (this.basePath == '/submissions/' + AuthService.uid + '/') {
+      var sub = new Submission();
+      sub.asnDetailKey = asnDetailKey;
+      sub.fileName = upload.name;
+      sub.url = upload.url;
+      sub.studId = AuthService.uid;
+      sub.studRno = this._authService.rno;
+      sub.studFName = this._authService.fname;
+      sub.studLName = this._authService.lname;
+      this._db.list(`/all-submission/`).push(sub); 
       this._db.list(`/submission-detail/${asnDetailKey}/${AuthService.uid}`).push(true); 
+    }
 
   }
 

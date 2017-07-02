@@ -12,7 +12,9 @@ import { Router } from "@angular/router";
 export class AuthService {
     isLoggedIn = false;
     loginError = "";
-    fname = "";
+    fname;
+    lname;
+    rno;
     static uid;
     static courseBatch;
     subscription;
@@ -46,12 +48,15 @@ export class AuthService {
                     if (users[0].type == "faculty") {
                         AuthService.uid = users[0].$key;
                         this.fname = users[0].fname;
+                        this.lname = users[0].lname;
                         this._router.navigate(["/faculty"]);
                     }
                     if (users[0].type == "student") {
                         AuthService.uid = users[0].$key;
                         AuthService.courseBatch = users[0].courseBatch;
                         this.fname = users[0].fname;
+                        this.lname = users[0].lname;
+                        this.rno = users[0].rno;
                         this._router.navigate(["/student"]);
                     }
                 });

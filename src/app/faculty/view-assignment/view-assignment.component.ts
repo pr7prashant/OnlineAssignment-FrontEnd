@@ -4,9 +4,11 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { GetAssignmentService } from "app/shared/services/getAssignments.service";
 import { AuthService } from "app/shared/services/auth.service";
 import { DeleteAssignmentService } from "app/shared/services/deleteAssignment.service";
+import { GetSubmissionService } from "app/shared/services/getSubmissions.service";
 
 import { FirebaseObjectObservable, FirebaseListObservable, AngularFireDatabase } from "angularfire2/database";
 import * as firebase from 'firebase';
+
 import { Assignment } from "app/faculty/create-assignment/assignment";
 
 @Component({
@@ -27,19 +29,22 @@ export class ViewAssignmentComponent implements OnInit, OnDestroy {
 
   asnFiles: FirebaseObjectObservable<any> // assignment attachments
   assignment: FirebaseObjectObservable<any>; // assignment detail object
+  subList: FirebaseListObservable<any>; // List of all submissions for a particular assignment
 
   constructor(
     private _routeParams: ActivatedRoute,
     private _getAsnService: GetAssignmentService,
     private _db: AngularFireDatabase,
     private _delAsnService: DeleteAssignmentService,
-    private _router: Router
+    private _router: Router,
+    private _getSubService: GetSubmissionService
   ) { }
 
   ngOnInit() {
     this.getRouteParams();
     this.assignment = this._getAsnService.getAssignment(this.asnDetailKey);
     this.getAttachments();
+    this.getSubList();
   }
 
   ngOnDestroy() {
@@ -88,23 +93,31 @@ export class ViewAssignmentComponent implements OnInit, OnDestroy {
     });
   }
 
+  downloadSubmission(submission) {
+    let storageRef = firebase.storage().ref().child('submissions/' + submission.studId + '/' + submission.fileName);
+    storageRef.getDownloadURL().then(url => {
+      var xhr = new XMLHttpRequest();
+      xhr.responseType = 'blob';
+      xhr.onload = function (event) {
+        var blob = xhr.response;
+      };
+      xhr.open('GET', url);
+      xhr.send();
+      window.open(url);
+    });
+  }
+
   delete() {
     var asn = new Assignment();
     this.assignment.subscribe(asmt => {
       asn.$key = asmt.$key;
-      asn.course = asmt.course;
-      asn.batch = asmt.batch;
-      asn.subject = asmt.subject;
-      asn.AsnName = asmt.AsnName;
-      asn.AsnDesc = asmt.AsnDesc;
-      asn.fileKey = asmt.fileKey;
-      asn.uid = asmt.uid;
-      asn.createdAt = asmt.createdAt;
-      asn.dueDate = asmt.dueDate;
     });
     this._delAsnService.deleteAssignment(asn);
     this._router.navigate(['/faculty/assignments']);
   }
 
+  getSubList() {
+    this.subList = this._getSubService.getAllSubmissions(this.asnDetailKey);
+  }
 
 }
