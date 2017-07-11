@@ -51,7 +51,7 @@
       </div>
     </div>
     <div class="form-group">
-      <upload></upload>
+      <upload [basePath]="basePath" [asnDetailKey]="asnDetailKey"></upload>
     </div>
     <button type="button" class="btn btn-primary" (click)="onEdit()" [disabled]="!form.valid">Edit Assignment</button>
   </form>

@@ -8,6 +8,7 @@ import { UploadService } from "app/shared/services/upload.service";
 import { GetAssignmentService } from "app/shared/services/getAssignments.service";
 import { Assignment } from "app/faculty/create-assignment/assignment";
 import { EditAssignmentService } from "app/faculty/edit-assignment/edit-assignment.service";
+import { AuthService } from "app/shared/services/auth.service";
 
 
 @Component({
@@ -27,6 +28,7 @@ export class EditAssignmentComponent implements OnInit, OnDestroy {
   asnDetailKey: string;
   keys: any[] = [];
   edited: boolean;
+  basePath: string = '/assignments/' + AuthService.uid + '/';
   subscription1;
   subscription2;
 

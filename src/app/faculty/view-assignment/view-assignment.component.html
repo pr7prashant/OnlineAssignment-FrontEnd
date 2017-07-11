@@ -67,3 +67,20 @@
     <td><i class="glyphicon glyphicon-download-alt" (click)="downloadSubmission(sub)"></i></td>
   </tr>
 </table>
+
+<br>
+<h4 *ngIf="!isLoading">Defaulters List</h4>
+<hr>
+
+<table class="table table-bordered" *ngIf="!isLoading">
+  <tr>
+    <th>Sno</th>
+    <th>Rno</th>
+    <!--<th>Name</th>-->
+  </tr>
+  <tr *ngFor="let item of defaulterList; let i = index">
+    <td *ngIf="i!=0">{{ i }}</td>
+    <td *ngIf="i!=0">{{ item }}</td>
+    <!--<td *ngIf="i!=0"></td>-->
+  </tr>
+</table>

@@ -24,6 +24,7 @@ export class EditAssignmentService {
         this._assignment = new Assignment();
         this._assignment.course = form.controls['course'].value;
         this._assignment.batch = form.controls['batch'].value;
+        this._assignment.courseBatch = form.controls['course'].value + form.controls['batch'].value;
         this._assignment.subject = form.controls['subject'].value;
         this._assignment.AsnName = form.controls['name'].value;
         this._assignment.AsnDesc = form.controls['description'].value;

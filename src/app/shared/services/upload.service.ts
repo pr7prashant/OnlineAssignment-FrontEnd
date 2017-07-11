@@ -73,7 +73,7 @@ export class UploadService {
   }
 
   // Deletes the file details from the realtime db
-  private deleteFileData(key: string) {
+  private deleteFileData(key: string) { 
     return this._db.list(`${this.basePath}/`).remove(key);
   }
 

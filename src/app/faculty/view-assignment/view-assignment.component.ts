@@ -23,10 +23,19 @@ export class ViewAssignmentComponent implements OnInit, OnDestroy {
   asnDetailKey: string;
   isLoading = true;
   currentNav;
+  courseBatch;
+  totalStudents;
+  studentNames = [];
+  defaulterList = [];
   subscription1;
   subscription2;
   subscription3;
+  subscription4;
+  subscription5;
+  subscription6;
 
+  batchStrength: FirebaseObjectObservable<any> // total number of students in batch
+  studentList: FirebaseListObservable<any> // list of all students of batch
   asnFiles: FirebaseObjectObservable<any> // assignment attachments
   assignment: FirebaseObjectObservable<any>; // assignment detail object
   subList: FirebaseListObservable<any>; // List of all submissions for a particular assignment
@@ -38,13 +47,14 @@ export class ViewAssignmentComponent implements OnInit, OnDestroy {
     private _delAsnService: DeleteAssignmentService,
     private _router: Router,
     private _getSubService: GetSubmissionService
-  ) { }
+  ) {
+    this.getRouteParams();
+    this.subList = this._getSubService.getAllSubmissions(this.asnDetailKey);
+  }
 
   ngOnInit() {
-    this.getRouteParams();
     this.assignment = this._getAsnService.getAssignment(this.asnDetailKey);
     this.getAttachments();
-    this.getSubList();
   }
 
   ngOnDestroy() {
@@ -52,6 +62,9 @@ export class ViewAssignmentComponent implements OnInit, OnDestroy {
     this.subscription1.unsubscribe();
     this.subscription2.unsubscribe();
     this.subscription3.unsubscribe();
+    this.subscription4.unsubscribe();
+    this.subscription5.unsubscribe();
+    this.subscription6.unsubscribe();
   }
 
   // Get assignment detail key from route parameter
@@ -67,6 +80,8 @@ export class ViewAssignmentComponent implements OnInit, OnDestroy {
 
   getAttachments() {
     this.subscription2 = this.assignment.subscribe(asnDetails => {
+      this.courseBatch = asnDetails.courseBatch;
+      this.getSubDefaultersList();
       if (asnDetails.fileKey) {
         this.fileKeys.push(asnDetails.fileKey);
         this.fileKeys[0].forEach(asnFileKey => {
@@ -116,8 +131,35 @@ export class ViewAssignmentComponent implements OnInit, OnDestroy {
     this._router.navigate(['/faculty/assignments']);
   }
 
-  getSubList() {
-    this.subList = this._getSubService.getAllSubmissions(this.asnDetailKey);
+  getSubDefaultersList() {
+    // Getting list of all students in batch
+     this.studentList = this._db.list('/users/', {
+      query: {
+        orderByChild: 'courseBatch',
+        equalTo: this.courseBatch
+      }
+    });
+    this.subscription4 = this.studentList.subscribe(stud => {
+      stud.forEach(element => {
+        this.studentNames.push(element.fname + " " + element.lname)
+      });
+    }); 
+
+    // Getting list of defaulter students
+    this.batchStrength = this._db.object(`/batch-strength/${this.courseBatch}`);
+    this.subscription5 = this.batchStrength.subscribe(obj => {
+      this.totalStudents = obj.$value;
+      for (var i = 1; i <= this.totalStudents; i++)
+        this.defaulterList[i] = i;
+    });
+    this.subscription6 = this.subList.subscribe(sub => {
+      sub.forEach(element => {
+        let rnoIndex = this.defaulterList.indexOf(element.studRno);
+        if (rnoIndex !== -1) {
+          this.defaulterList.splice(rnoIndex, 1);
+        }
+      });
+    });
   }
 
 }
