@@ -4,7 +4,7 @@ import { UsernameValidators } from "app/shared/validators/usernameValidators";
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { Observable } from "rxjs/Observable";
-import { Router } from "@angular/router";
+import { Router, RouterModule, Routes } from "@angular/router";
 import { AuthService } from "app/shared/services/auth.service";
 
 @Component({
@@ -25,7 +25,6 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
     this.form = this._fb.group({
       email: ['', Validators.compose([ Validators.required, Validators.email ])],
       password: ['', Validators.compose([ Validators.required ])]
@@ -35,10 +34,11 @@ export class HomeComponent implements OnInit {
   onloginClick() {
     var email = this.form.get('email').value;
     var password = this.form.get('password').value;
-
     this._authService.login(email, password);
-      
   }
 
+  onChangePwd() {
+    this._router.navigate(['changePassword']);
+  }
 
 }

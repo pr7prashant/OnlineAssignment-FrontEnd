@@ -27,6 +27,7 @@ export class ViewAssignmentComponent implements OnInit, OnDestroy {
   totalStudents;
   studentNames = [];
   defaulterList = [];
+  asnDownloadUrls = [];
   subscription1;
   subscription2;
   subscription3;
@@ -96,30 +97,12 @@ export class ViewAssignmentComponent implements OnInit, OnDestroy {
   downloadAttachment(fileName) {
     var uid = AuthService.uid;
     let storageRef = firebase.storage().ref().child('assignments/' + uid + '/' + fileName);
-    storageRef.getDownloadURL().then(url => {
-      var xhr = new XMLHttpRequest();
-      xhr.responseType = 'blob';
-      xhr.onload = function (event) {
-        var blob = xhr.response;
-      };
-      xhr.open('GET', url);
-      xhr.send();
-      window.open(url);
-    });
+    storageRef.getDownloadURL().then(url => window.open(url));
   }
 
   downloadSubmission(submission) {
     let storageRef = firebase.storage().ref().child('submissions/' + submission.studId + '/' + submission.fileName);
-    storageRef.getDownloadURL().then(url => {
-      var xhr = new XMLHttpRequest();
-      xhr.responseType = 'blob';
-      xhr.onload = function (event) {
-        var blob = xhr.response;
-      };
-      xhr.open('GET', url);
-      xhr.send();
-      window.open(url);
-    });
+    storageRef.getDownloadURL().then(url => window.open(url));
   }
 
   delete() {
@@ -154,12 +137,17 @@ export class ViewAssignmentComponent implements OnInit, OnDestroy {
     });
     this.subscription6 = this.subList.subscribe(sub => {
       sub.forEach(element => {
+        this.asnDownloadUrls.push(element.url);
         let rnoIndex = this.defaulterList.indexOf(element.studRno);
         if (rnoIndex !== -1) {
           this.defaulterList.splice(rnoIndex, 1);
         }
       });
     });
+  }
+
+  downloadAllAsn() {
+    this.asnDownloadUrls.forEach(url => window.open(url));
   }
 
 }

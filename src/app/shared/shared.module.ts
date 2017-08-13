@@ -8,6 +8,7 @@ import { NavbarComponent } from "app/shared/components/navbar/navbar.component";
 import { FooterComponent } from "app/shared/components/footer/footer.component";
 import { NotFoundComponent } from "app/shared/components/not-found/not-found.component";
 import { UploadComponent } from "app/shared/components/upload/upload.component";
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 @NgModule({
     imports: [
@@ -21,7 +22,8 @@ import { UploadComponent } from "app/shared/components/upload/upload.component";
         FooterComponent,
         NotFoundComponent,
         UploadComponent,
-        SpinnerComponent
+        SpinnerComponent,
+        ChangePasswordComponent
     ],
     providers: [],
     exports: [

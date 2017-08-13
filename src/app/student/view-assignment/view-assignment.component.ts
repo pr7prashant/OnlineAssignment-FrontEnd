@@ -84,16 +84,7 @@ export class ViewAssignmentComponent implements OnInit {
   downloadAttachment(fileName) {
     var uid = AuthService.uid;
     let storageRef = firebase.storage().ref().child('assignments/' + this.asnAuthorId + '/' + fileName);
-    storageRef.getDownloadURL().then(url => {
-      var xhr = new XMLHttpRequest();
-      xhr.responseType = 'blob';
-      xhr.onload = function (event) {
-        var blob = xhr.response;
-      };
-      xhr.open('GET', url);
-      xhr.send();
-      window.open(url);
-    });
+    storageRef.getDownloadURL().then(url => window.open(url));
   }
 
   getStatus() {

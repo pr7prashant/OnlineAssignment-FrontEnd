@@ -41,6 +41,10 @@ export const facultyRoutes: Routes = [
                 component: ViewAssignmentComponent
             },
             {
+                path: 'assignments/history/edit/:AsnDetailKey',
+                component: EditAssignmentComponent
+            },
+            {
                 path: 'assignments/edit/:AsnDetailKey',
                 component: EditAssignmentComponent
             }

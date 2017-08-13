@@ -67,6 +67,9 @@
     <td><i class="glyphicon glyphicon-download-alt" (click)="downloadSubmission(sub)"></i></td>
   </tr>
 </table>
+<div *ngIf="!isLoading">
+  <button class="btn btn-primary" (click)="downloadAllAsn()">Download All</button>
+</div>
 
 <br>
 <h4 *ngIf="!isLoading">Defaulters List</h4>
